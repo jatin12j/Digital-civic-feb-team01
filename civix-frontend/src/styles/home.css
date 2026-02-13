@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background-color: #f5f6f8;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f3c88;
+}
+
+.nav-links a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+}
+
+.register-btn {
+  background-color: #1f3c88;
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+/* Hero */
+.hero {
+  background-color: #e9eaed;
+  padding: 100px 60px;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  color: #1f3c88;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.hero p {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #555;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.primary-btn {
+  background-color: #1f3c88;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 6px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background-color: #1db954;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* How Section */
+.how-section {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.how-section h2 {
+  color: #1f3c88;
+  font-size: 32px;
+}

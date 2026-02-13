@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.login-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT SIDE */
+.login-left {
+  width: 55%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-image {
+  width: 20rem;
+    margin-left: 13rem;
+    margin-top: -70px;
+}
+
+.login-left h2 {
+  margin-bottom: 10px;
+   margin-left: 16rem;
+}
+
+.subtitle {
+  margin-bottom: 25px;
+  color: gray;
+    margin-left: 9rem;
+
+}
+
+.login-left label {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.login-left input {
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.forgot {
+  text-align: right;
+  margin-top: 8px;
+}
+
+.forgot a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #1f3c88;
+}
+
+.signin-btn {
+  margin-top: 20px;
+  padding: 12px;
+  background: #173b3f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.divider {
+  text-align: center;
+  margin: 20px 0;
+  color: gray;
+}
+
+.google-btn,
+.facebook-btn {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: #f2f2f2;
+}
+
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-text span {
+  color: #1f3c88;
+  cursor: pointer;
+}
+
+/* RIGHT SIDE */
+.login-right {
+  width: 45%;
+  padding: 60px;
+  color: white;
+  background: linear-gradient(135deg, #1f3c88, #4b6cb7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+  margin: 20px;
+  margin-right: 20px;
+}
+
+.login-right h1 {
+  font-size: 40px;
+}
+
+.login-right h3 {
+  margin: 10px 0 20px 0;
+}
+
+.login-right ul {
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.login-right li {
+  margin-bottom: 10px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats h2 {
+  font-size: 22px;
+}
