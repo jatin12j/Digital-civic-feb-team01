@@ -13,7 +13,7 @@ function Home() {
           <a href="#about">About</a>
           <a href="#how">How It Works</a>
           <Link to="/login">Login</Link>
-          <Link to="/register" className="register-btn">
+          <Link to="/register">
             Register
           </Link>
         </div>

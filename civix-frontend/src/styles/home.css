@@ -10,14 +10,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 60px;
+  padding: 10px 60px;
+  /* Reduced padding from 20px */
   background-color: #f5f6f8;
+  height: 60px;
+  /* Enforce a specific height if needed, or let padding dictate */
 }
 
 .logo {
   font-size: 22px;
   font-weight: 600;
   color: #1f3c88;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
 }
 
 .nav-links a {
@@ -30,8 +38,11 @@
 .register-btn {
   background-color: #1f3c88;
   color: white !important;
-  padding: 8px 16px;
+  padding: 6px 14px;
+  /* Reduced padding from 8px 16px */
   border-radius: 6px;
+  font-size: 14px;
+  /* Slightly smaller text for button */
 }
 
 /* Hero */
