@@ -8,6 +8,7 @@
 .login-wrapper {
   display: flex;
   height: 100vh;
+  width: 100%;
 }
 
 /* LEFT SIDE */
@@ -17,41 +18,43 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center; /* center content horizontally */
+  text-align: center;
 }
 
-
-.login-image {
+.login-left .login-image {
   width: 20rem;
-    margin-left: 13rem;
-    margin-top: -70px;
+  margin-bottom: 20px;
 }
 
 .login-left h2 {
   margin-bottom: 10px;
-   margin-left: 16rem;
 }
 
 .subtitle {
   margin-bottom: 25px;
   color: gray;
-    margin-left: 9rem;
-
 }
 
 .login-left label {
   margin-top: 10px;
   font-size: 14px;
+  display: block;
+  text-align: left;
 }
 
 .login-left input {
-  padding: 8px;         /* smaller */
-  font-size: 14px;      /* smaller text */
+  padding: 8px;
+  font-size: 14px;
   border-radius: 6px;
+  width: 100%;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
 }
 
 .forgot {
   text-align: right;
-   padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .forgot a {
@@ -60,15 +63,16 @@
   color: #1E4AE9;
 }
 
-
 .signin-btn {
-  padding: 8px;         /* smaller */
+  padding: 8px;
   font-size: 14px;
   border-radius: 6px;
   background-color: #162D3A;
-  color:#FFFFFF
+  color: #FFFFFF;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 12px;
 }
-
 
 .divider {
   text-align: center;
@@ -76,22 +80,52 @@
   color: gray;
 }
 
-
 .signup-text {
   margin-top: 15px;
   font-size: 14px;
-  margin-left: 33%;
 }
 
 .signup-text span {
   color: #1E4AE9;
   cursor: pointer;
 }
+
 .footer {
-   /* pushes it to bottom */
-  text-align: center; /* center horizontally */
+  text-align: center;
   font-size: 12px;
   color: #959CB6;
+  margin-top: 20px;
+}
+
+/* FORM BOX */
+.form-box {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.social-media {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.google-btn,
+.facebook-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
 }
 
 /* RIGHT SIDE */
@@ -104,92 +138,14 @@
   justify-content: center;
   border-radius: 30px;
   margin: 20px;
-
-  background: 
+  background:
     linear-gradient(rgba(21, 78, 225, 0.75), rgba(21, 78, 225, 0.75)),
     url("../assets/image.png");
-opacity: 0.9;
+  opacity: 0.9;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
-
-.login-right h1 {
-  font-size: 40px;
-}
-
-.login-right h3 {
-  margin: 10px 0 20px 0;
-}
-
-.login-right ul {
-  list-style: none;
-  margin-bottom: 30px;
-}
-
-.login-right li {
-  margin-bottom: 10px;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-between;
-}
-
-.stats h2 {
-  font-size: 22px;
-}
-.form-box{
-  width:400px;
-  margin-left: 11rem;
-}
-.form-box input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 12px;
-  border-radius: 12px !important;
-  border: 1px solid #ccc;
-  outline: none;
-}
-
-.form-box input:focus {
-  border: 1px solid #1f3c88;
-}
-
-.signin-btn,
-.google-btn,
-.facebook-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px !important;
-  border: none;
-  cursor: pointer;
-}
-.social-media {
-  display: flex;
-  flex-direction: column; /* buttons one below another */
-  gap: 12px;              /* space between them */
-} 
-.google-btn {
-  display: flex;              /* keep image + text in one line */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* center everything */
-  gap: 10px;                  /* space between image & text */
-}
-.facebook-btn{
-  display: flex;              /* keep image + text in one line */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* center everything */
-  gap: 10px;  
-  margin-left: 6px;
-}
-.icon {
-  width: 18px;                /* small image */
-  height: 18px;
-}
-/* Blue overlay */
 
 .right-content {
   max-width: 550px;
@@ -266,3 +222,18 @@ opacity: 0.9;
   opacity: 0.9;
 }
 
+/* Responsive */
+@media (max-width: 1024px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+  .login-left, .login-right {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding: 20px;
+  }
+  .login-left .login-image {
+    width: 12rem;
+  }
+}
