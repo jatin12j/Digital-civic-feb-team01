@@ -1,103 +1,186 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ================= HOME WRAPPER ================= */
+
+.home-page {
   font-family: "Segoe UI", sans-serif;
 }
 
-/* Navbar */
-.navbar {
+/* ================= NAVBAR ================= */
+
+.home-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 60px;
-  /* Reduced padding from 20px */
-  background-color: #f5f6f8;
-  height: 60px;
-  /* Enforce a specific height if needed, or let padding dictate */
+  padding: 18px 80px;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.85);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: 600;
+.home-logo {
+  font-size: 24px;
+  font-weight: 700;
   color: #1f3c88;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-}
-
-.nav-links a {
-  margin-left: 25px;
+.home-nav-links a {
+  margin-left: 30px;
   text-decoration: none;
   color: #333;
   font-size: 15px;
+  transition: 0.3s ease;
 }
 
-.register-btn {
-  background-color: #1f3c88;
+.home-nav-links a:hover {
+  color: #2563eb;
+}
+
+.home-register-btn {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
   color: white !important;
-  padding: 6px 14px;
-  /* Reduced padding from 8px 16px */
-  border-radius: 6px;
-  font-size: 14px;
-  /* Slightly smaller text for button */
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 500;
 }
 
-/* Hero */
-.hero {
-  background-color: #e9eaed;
-  padding: 100px 60px;
+/* ================= HERO ================= */
+
+.home-hero {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  padding: 120px 80px;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-content {
-  max-width: 700px;
+.home-hero::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: rgba(37, 99, 235, 0.2);
+  border-radius: 50%;
+  top: -150px;
+  right: -150px;
+  filter: blur(120px);
 }
 
-.hero h1 {
-  font-size: 48px;
-  color: #1f3c88;
-  font-weight: 700;
-  line-height: 1.3;
+.home-hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.hero p {
-  margin-top: 20px;
+.home-hero-content {
+  max-width: 600px;
+  z-index: 2;
+}
+
+.home-hero h1 {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #1e3a8a;
+}
+
+.home-hero span {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-hero p {
+  margin-top: 25px;
   font-size: 18px;
   color: #555;
 }
 
-.hero-buttons {
-  margin-top: 30px;
+.home-hero-buttons {
+  margin-top: 35px;
 }
 
-.primary-btn {
-  background-color: #1f3c88;
+.home-primary-btn {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
   color: white;
   border: none;
-  padding: 12px 22px;
-  border-radius: 6px;
+  padding: 14px 28px;
+  border-radius: 12px;
   margin-right: 15px;
   cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+  transition: 0.3s ease;
 }
 
-.secondary-btn {
-  background-color: #1db954;
+.home-primary-btn:hover {
+  transform: translateY(-4px);
+}
+
+.home-secondary-btn {
+  background: #22c55e;
   color: white;
   border: none;
-  padding: 12px 22px;
-  border-radius: 6px;
+  padding: 14px 28px;
+  border-radius: 12px;
   cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
 }
 
-/* How Section */
-.how-section {
+.home-secondary-btn:hover {
+  transform: translateY(-4px);
+}
+
+.home-hero-image img {
+  width: 500px;
+}
+
+/* ================= HOW SECTION ================= */
+
+.home-how-section {
   text-align: center;
-  padding: 60px 0;
+  padding: 100px 80px;
+  background: #f9fafb;
 }
 
-.how-section h2 {
-  color: #1f3c88;
-  font-size: 32px;
+.home-how-section h2 {
+  color: #1e3a8a;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.home-features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.home-card {
+  background: white;
+  padding: 40px;
+  width: 280px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  transition: 0.3s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-10px);
+}
+
+.home-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.home-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #1e3a8a;
+}
+
+.home-card p {
+  color: #666;
+  font-size: 15px;
 }
