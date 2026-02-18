@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from '@react-oauth/google';
 import { Landmark, FileText, Vote, CheckCircle, User, Mail, ArrowRight, Rocket, MapPin, Loader2 } from "lucide-react";
-import api from "../api/axios";
 import "../styles/register.css";
 import bgImage from "../assets/registerpage.jpg";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
     const [role, setRole] = useState("citizen");
@@ -19,6 +19,7 @@ function Register() {
     const [locationError, setLocationError] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const { register, googleLogin } = useAuth();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,33 +37,28 @@ function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
         setError("");
-        try {
-            const res = await api.post('/auth/register', {
-                ...formData,
-                role
-            });
-            console.log("Registration Success:", res.data);
-            toast.success("Registration successful! Welcome to Civix.");
+
+        const result = await register({ ...formData, role });
+        if (result.success) {
+            toast.success("Registration successful! Please login to continue.");
             setTimeout(() => {
-                navigate('/');
-            }, 1000);
-        } catch (err) {
-            console.error(err);
-            const errorMsg = err.response?.data?.message || err.response?.data?.error || "Registration failed";
-            setError(errorMsg);
-            toast.error(errorMsg);
+                navigate('/login');
+            }, 1500);
+        } else {
+            setError(result.message);
+            toast.error(result.message);
         }
     };
 
     const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            try {
-                const res = await api.post('/auth/google', { code: codeResponse.code });
-                console.log("Login Success:", res.data);
-                navigate('/');
-            } catch (err) {
-                console.error(err);
-                setError("Google login failed");
+            const result = await googleLogin(codeResponse.code);
+            if (result.success) {
+                toast.success("Google Login successful!");
+                navigate('/dashboard');
+            } else {
+                setError(result.message);
+                toast.error(result.message);
             }
         },
         flow: 'auth-code',

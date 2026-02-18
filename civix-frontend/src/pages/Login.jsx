@@ -2,46 +2,45 @@ import React, { useState } from "react";
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from '@react-oauth/google';
-import api from "../api/axios";
 import "../styles/login.css";
 import welcomeImg from "../assets/image1.png";
 import Google from "../assets/image2.png";
 import Facebook from "../assets/image3.png";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login, googleLogin } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      const res = await api.post('/auth/login', { email, password });
-      console.log("Login Success:", res.data);
+
+    const result = await login(email, password);
+    if (result.success) {
       toast.success("Login successful! Welcome back.");
       setTimeout(() => {
-        navigate('/');
+        navigate('/dashboard');
       }, 1000);
-    } catch (err) {
-      console.error(err);
-      const errorMsg = err.response?.data?.message || "Login failed";
-      setError(errorMsg);
-      toast.error(errorMsg);
+    } else {
+      setError(result.message);
+      toast.error(result.message);
     }
   };
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      try {
-        const res = await api.post('/auth/google', { code: codeResponse.code });
-        console.log("Login Success:", res.data);
-        navigate('/');
-      } catch (err) {
-        console.error(err);
-        setError("Google login failed");
+      const result = await googleLogin(codeResponse.code);
+      if (result.success) {
+        toast.success("Google Login successful!");
+        navigate('/dashboard');
+      } else {
+        setError(result.message);
+        toast.error(result.message);
       }
     },
     flow: 'auth-code',

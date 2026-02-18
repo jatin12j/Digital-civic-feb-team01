@@ -31,6 +31,18 @@ const userSchema = new mongoose.Schema({
   location: {
     type: String,
     default: ''
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  governmentId: {
+    type: String,
+    default: ''
+  },
+  verificationDocument: {
+    type: String,
+    default: ''
   }
 }, { timestamps: true });
 

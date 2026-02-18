@@ -61,7 +61,17 @@ const register = async (req, res) => {
       location
     });
 
-    sendTokenResponse(user, 201, res);
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        location: user.location
+      }
+    });
   } catch (error) {
     console.error('Register Error Stack:', error);
     res.status(500).json({ message: 'Server Error', error: error.message, stack: error.stack });

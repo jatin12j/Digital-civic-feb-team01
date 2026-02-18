@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/home.css";
 import heroImg from "../assets/heroImg.png";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="home-page">
-      
+
       {/* Navbar */}
       <nav className="home-navbar">
         <div className="home-logo">Civix</div>
@@ -14,10 +17,16 @@ function Home() {
         <div className="home-nav-links">
           <a href="#about">About</a>
           <a href="#how">How It Works</a>
-          <Link to="/login">Login</Link>
-          <Link to="/register" className="home-register-btn">
-            Register
-          </Link>
+          {isAuthenticated ? (
+            <Link to="/dashboard" className="home-register-btn">Dashboard</Link>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register" className="home-register-btn">
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
