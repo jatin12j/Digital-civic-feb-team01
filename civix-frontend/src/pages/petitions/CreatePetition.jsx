@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Loader2, ArrowLeft, Send, Save } from 'lucide-react';
 import Sidebar from '../../components/Sidebar';
 import '../../styles/dashboard.css';
+import { toast } from 'react-toastify';
 
 const CreatePetition = () => {
     const { id } = useParams();
@@ -57,28 +58,32 @@ const CreatePetition = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.title || !formData.description || !formData.category || !formData.location) {
-            setError('Please fill in all required fields.');
-            return;
-        }
+    e.preventDefault();
+    if (!formData.title || !formData.description || !formData.category || !formData.location) {
+        setError('Please fill in all required fields.');
+        toast.error('Please fill in all required fields.');
+        return;
+    }
 
-        try {
-            setLoading(true);
-            setError('');
-            if (isEdit) {
-                await petitionService.updatePetition(id, formData);
-            } else {
-                await petitionService.createPetition(formData);
-            }
-            // Success - redirect to dashboard or petitions list
-            navigate(isEdit ? '/dashboard' : '/petitions');
-        } catch (err) {
-            setError(err.message || `Failed to ${isEdit ? 'update' : 'create'} petition.`);
-        } finally {
-            setLoading(false);
+    try {
+        setLoading(true);
+        setError('');
+        if (isEdit) {
+            await petitionService.updatePetition(id, formData);
+            toast.success('Petition successfully updated!');
+        } else {
+            await petitionService.createPetition(formData);
+            toast.success('Petition successfully launched!');
         }
-    };
+        // Success - redirect to dashboard or petitions list
+        navigate(isEdit ? '/dashboard' : '/petitions');
+    } catch (err) {
+        setError(err.message || `Failed to ${isEdit ? 'update' : 'create'} petition.`);
+        toast.error(err.message || `Failed to ${isEdit ? 'update' : 'create'} petition.`);
+    } finally {
+        setLoading(false);
+    }
+};
 
     if (user?.role !== 'citizen') {
         return (

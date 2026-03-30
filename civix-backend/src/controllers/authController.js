@@ -1,25 +1,32 @@
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// Helper to generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRY || '7d',
-  });
+// ✅ FIXED: Generate JWT Token (IMPORTANT CHANGE)
+const generateToken = (user) => {
+  return jwt.sign(
+    {
+      id: user._id,
+      role: user.role,
+      location: user.location
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRY || '7d',
+    }
+  );
 };
 
-// Helper to send token response
+// ✅ Send Token Response
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = generateToken(user._id);
+  const token = generateToken(user);
 
   const options = {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-    httpOnly: true, // prevent client side scripts from accessing data
-    secure: process.env.NODE_ENV === 'production', // only send over https in production
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
   };
 
   res
@@ -38,21 +45,17 @@ const sendTokenResponse = (user, statusCode, res) => {
     });
 };
 
-// @desc    Register user
-// @route   POST /api/auth/register
-// @access  Public
+// ✅ REGISTER
 const register = async (req, res) => {
   try {
     const { name, email, password, role, location } = req.body;
 
-    // Check if user exists
     const userExists = await User.findOne({ email });
 
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create user
     const user = await User.create({
       name,
       email,
@@ -72,37 +75,33 @@ const register = async (req, res) => {
         location: user.location
       }
     });
+
   } catch (error) {
-    console.error('Register Error Stack:', error);
-    res.status(500).json({ message: 'Server Error', error: error.message, stack: error.stack });
+    console.error('Register Error:', error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+// ✅ LOGIN
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate email & password
     if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide an email and password' });
+      return res.status(400).json({ message: 'Please provide email and password' });
     }
 
-    // Check for user
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Check if user uses Google Auth only
+    // Google-only account check
     if (!user.password && user.googleId) {
-      return res.status(400).json({ message: 'Please use Google Login for this account' });
+      return res.status(400).json({ message: 'Use Google login' });
     }
 
-    // Check password
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
@@ -110,27 +109,24 @@ const login = async (req, res) => {
     }
 
     sendTokenResponse(user, 200, res);
+
   } catch (error) {
     console.error('Login Error:', error);
     res.status(500).json({ message: 'Server Error' });
   }
 };
 
-// @desc    Log user out / clear cookie
-// @route   GET /api/auth/logout
-// @access  Public
+// ✅ LOGOUT
 const logout = (req, res) => {
   res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ success: true });
 };
 
-// @desc    Get current logged in user
-// @route   GET /api/auth/me
-// @access  Private
+// ✅ GET CURRENT USER
 const getMe = async (req, res) => {
   res.status(200).json({
     success: true,
@@ -138,31 +134,28 @@ const getMe = async (req, res) => {
   });
 };
 
+// ✅ GOOGLE LOGIN
 const googleLogin = async (req, res) => {
   const { code } = req.body;
 
   if (!code) {
-    return res.status(400).json({ message: 'Authorization code is required' });
+    return res.status(400).json({ message: 'Authorization code required' });
   }
 
   try {
-    // Exchange code for tokens
     const { tokens } = await client.getToken({
       code,
       redirect_uri: 'postmessage'
     });
-    const idToken = tokens.id_token;
 
-    // Verify the ID token
     const ticket = await client.verifyIdToken({
-      idToken: idToken,
+      idToken: tokens.id_token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
     const payload = ticket.getPayload();
-    const { sub: googleId, email, name, picture } = payload;
+    const { sub: googleId, email, name } = payload;
 
-    // Check if user exists
     let user = await User.findOne({ email });
 
     if (user) {
@@ -175,8 +168,7 @@ const googleLogin = async (req, res) => {
         name,
         email,
         googleId,
-        password: '', // Empty password for google users
-        // role defaults to citizen
+        password: '',
       });
       await user.save();
     }
